@@ -52,7 +52,7 @@ Copiar el archivo `.env.template` y renombrar la copia a `.env`
 
 Ingresar los valores de las variables de entorno definidas en el archivo `.env`
 
-```js
+```dotenv
 NODE_ENV=env
 PORT=4000
 DB_POSTGRES_HOST=localhost

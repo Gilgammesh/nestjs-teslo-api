@@ -1,6 +1,7 @@
 export const AppConfig = () => ({
   environment: process.env['NODE_ENV'],
   appPort: +process.env['PORT'],
+  hostApi: process.env['HOST_API'],
   dbPostgresHost: process.env['DB_POSTGRES_HOST'],
   dbPostgresPort: +process.env['DB_POSTGRES_PORT'],
   dbPostgresName: process.env['DB_POSTGRES_NAME'],
