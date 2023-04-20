@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { AddTimestamps } from 'src/common/decorators/timestamps.decorator';
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { AddTimestamps } from 'src/common/decorators/add-timestamps.decorator';
 import { ProductImage } from './product-image.entity';
+import { User } from 'src/users/entities/user.entity';
 
 export enum ProductGender {
   MEN = 'men',
@@ -41,6 +42,9 @@ export class Product {
 
   @OneToMany(() => ProductImage, (productImage) => productImage.product, { cascade: true, eager: true })
   images?: ProductImage[];
+
+  @ManyToOne(() => User, (user) => user.product, { eager: true })
+  user: User;
 
   @BeforeInsert()
   transformInsertSlug() {

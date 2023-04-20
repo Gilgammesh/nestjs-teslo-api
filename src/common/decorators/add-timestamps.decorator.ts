@@ -13,6 +13,7 @@ export function AddTimestamps() {
       })
       updatedAt: Date;
     }
+    Object.defineProperty(TimestampedEntity, 'name', { value: target.name });
     return TimestampedEntity;
   };
 }

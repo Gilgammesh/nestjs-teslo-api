@@ -7,6 +7,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { CreateProductDto, UpdateProductDto } from './dtos';
 import { Product } from './entities/product.entity';
 import { ProductImage } from './entities';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class ProductsService {
@@ -24,12 +25,13 @@ export class ProductsService {
   private readonly defaultPage = AppConfig().defaultPage;
   private readonly defaultOffset = AppConfig().defaultOffset;
 
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto, user: User) {
     try {
       const { images, ...partialCreateProductDto } = createProductDto;
       const newProduct = this.productsRepository.create({
         ...partialCreateProductDto,
-        ...(images && { images: images.map((image) => this.productImagesRepository.create({ url: image })) })
+        ...(images && { images: images.map((image) => this.productImagesRepository.create({ url: image })) }),
+        user
       });
       const createdProduct = await this.productsRepository.save(newProduct);
       return createdProduct;
@@ -63,7 +65,7 @@ export class ProductsService {
     return productFinded;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
+  async update(id: string, updateProductDto: UpdateProductDto, user: User) {
     const { images, ...partialUpdateProductDto } = updateProductDto;
     const productFinded = await this.findOne(id);
 
@@ -78,14 +80,14 @@ export class ProductsService {
       }
       Object.assign(productFinded, {
         ...partialUpdateProductDto,
-        ...(images && { images: images.map((image) => this.productImagesRepository.create({ url: image })) })
+        ...(images && { images: images.map((image) => this.productImagesRepository.create({ url: image })) }),
+        user
       });
       await queryRunner.manager.save(productFinded);
 
       await queryRunner.commitTransaction();
       await queryRunner.release();
 
-      // const productUpdated = await this.productsRepository.save(productFinded);
       return productFinded;
     } catch (error) {
       await queryRunner.rollbackTransaction();

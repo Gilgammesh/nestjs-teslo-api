@@ -8,6 +8,9 @@ export const AppConfig = () => ({
   dbPostgresUser: process.env['DB_POSTGRES_USER'],
   dbpostgresPassword: process.env['DB_POSTGRES_PASSWORD'],
   appGlobalPrefix: 'api',
+  jwtSecret: process.env['JWT_SECRET'],
+  jwtExpiresIn: '2h',
+  // jwtExpiresIn: '1s',
   defaultPage: 1,
   defaultOffset: 10
 });
