@@ -7,7 +7,7 @@ import { HandleDbException } from 'src/common/exceptions/handle-db.exception';
 import { User } from 'src/users/entities/user.entity';
 import { CreateUserDto } from 'src/users/dtos';
 import { LoginUserDto } from './dtos';
-import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { AuthResponse, JwtPayload } from './interfaces';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +20,7 @@ export class AuthService {
     private handleDbException: HandleDbException
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<AuthResponse> {
     try {
       const { password, ...partialCreateUserDto } = createUserDto;
       const cryptedPassword = await bcrypt.hash(password, 10);
@@ -40,7 +40,7 @@ export class AuthService {
     }
   }
 
-  async login(loginUserDto: LoginUserDto) {
+  async login(loginUserDto: LoginUserDto): Promise<AuthResponse> {
     const { email, password } = loginUserDto;
     const userFinded = await this.usersRepository.findOne({
       where: { email },

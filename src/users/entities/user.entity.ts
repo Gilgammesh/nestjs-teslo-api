@@ -1,9 +1,10 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { AddTimestamps } from 'src/common/decorators/add-timestamps.decorator';
 import { validRoles } from 'src/auth/interfaces';
 import { Product } from 'src/products/entities';
 
-@Entity('users')
+@Entity({ name: 'users' })
 @AddTimestamps()
 export class User {
   @PrimaryGeneratedColumn('uuid')
