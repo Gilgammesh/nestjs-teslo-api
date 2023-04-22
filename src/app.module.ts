@@ -11,6 +11,7 @@ import { SeedModule } from './seed/seed.module';
 import { FilesModule } from './files/files.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { MessagesModule } from './sockets/messages/messages.module';
 
 @Module({
   imports: [
@@ -40,7 +41,8 @@ import { UsersModule } from './users/users.module';
     SeedModule,
     FilesModule,
     AuthModule,
-    UsersModule
+    UsersModule,
+    MessagesModule
   ],
   controllers: [],
   providers: []
